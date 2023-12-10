@@ -21,8 +21,7 @@ def distance_zzz(values,steps:[str]):
             key = values[key][next_step]
             step_index+=1
         return step_index
-def finished_z(keys:[str]):
-     return all([key.endswith('Z') for key in keys])
+
 def get_period(key:str,values:Mapping[str,Mapping[str,str]],steps:[str]):
     step_index = 0
     while step_index < 1000*len(steps) :
@@ -38,40 +37,6 @@ def get_period(key:str,values:Mapping[str,Mapping[str,str]],steps:[str]):
      
 def mcm(a:int,b:int):
     return int((a*b)/gcd(a,b))
-def merge_periods(period1:int, positions1:[int], period2:int, positions2:[int],bias:int):
-    # adjust for bias
-    positions1b = [position-bias for position in positions1]
-    positions2b = [position-bias for position in positions2]
-    mcm_12 = mcm(period1,period2)
-    n1 = 0
-    n2 = 0
-    index2 = 0
-    index1 = 0
-    matches = []
-    position2 = positions2b[index2]
-    position1 = positions1b[index1]
-    while position1 < mcm_12:
-        if index1 >= len(positions1b):
-            # advance one period
-            index1 = 0
-            n1+=1
-        position1 = positions1b[index1] + period1*n1
-        # check if position1 is in positions2b
-        while position2 <= position1:
-            if position2 == position1:
-                matches.append(position1)
-                index1+=1
-                break
-            else:
-                index2 +=1
-                if index2 >= len(positions2b):
-                    # advance one period
-                    index2 = 0
-                    n2+=1
-                position2 = positions2b[index2] + period2*n2
-        index1+=1
-    return mcm_12 ,[match + bias for match in matches]
-            
 
 if __name__ == "__main__":
     with open("input") as f:
